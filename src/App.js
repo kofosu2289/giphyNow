@@ -1,13 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { PageHeader, Tabs, Tab } from 'react-bootstrap';
+
+import Search from './Search';
+import Functionalities from './Functionalities';
+
 import './App.css';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div></div>
-    );
-  }
+class App extends Component {
+
+    render() {
+        return (
+            <section>
+                <PageHeader>
+                    giphyNow
+                </PageHeader>
+                <Search />
+                <Functionalities />
+            </section>
+        );
+    }
 }
 
 export default App;
