@@ -14,7 +14,24 @@ class App extends Component {
       giphy: GphApiClient("8XADJBZWvzB75qIDyCpfWLbnE5otD7wG"),
       searchQuery: "",
       gifs: [],
+      favorites: [],
     };
+  }
+
+  componentWillMount = () => {
+    this.state.giphy.trending("gifs", {})
+      .then((response) => {
+        response.data.forEach((gif) => {
+          let newArray = this.state.gifs.slice();
+          newArray.push(gif.images.fixed_height_downsampled.gif_url);
+
+          this.setState({
+            gifs: newArray,
+          });
+        })
+      }).catch((err) => {
+        
+      })
   }
 
   search = (event) => {
