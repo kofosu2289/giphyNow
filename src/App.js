@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PageHeader, Tabs, Tab } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 import './App.css';
 
 import Search from './Search';
@@ -19,6 +19,11 @@ class App extends Component {
   }
 
   componentWillMount = () => {
+    this.loadFeed();
+    this.loadFavorites();
+  }
+
+  loadFeed = () => {
     this.state.giphy.trending("gifs", {})
       .then((response) => {
         response.data.forEach((gif) => {
@@ -32,6 +37,19 @@ class App extends Component {
       }).catch((err) => {
         
       })
+  }
+
+  loadFavorites = () => {
+    if (typeof (Storage) !== "undefined") {
+      let storageFavorites = localStorage.getItem("favorites");
+      if (storageFavorites != null) {
+        this.setState({
+          favorites: storageFavorites
+        });
+      }
+    } else {
+      // Sorry! No Web Storage support..
+    }
   }
 
   search = (event) => {
@@ -48,7 +66,7 @@ class App extends Component {
           newArray.push(gif.images.fixed_height_downsampled.gif_url);
 
           this.setState({
-            gifs: newArray
+            gifs: newArray,
           });
         })
       })
@@ -59,8 +77,36 @@ class App extends Component {
 
   updateQuery = (event) => {
     this.setState({
-      searchQuery: event.target.value
+      searchQuery: event.target.value,
     });
+  }
+
+  addFavorite = (event) => {
+    let favorites = localStorage.getItem("favorites");
+    favorites.push(event);
+    localStorage.setItem("favorites", favorites);
+
+    let newArray = this.state.favorites.slice();
+    newArray.push(event);
+    this.setState({
+      favorites: newArray
+    });
+  }
+
+  removeFavorite = (event) => {
+    let favorites = localStorage.getItem("favorites");
+
+    let index = favorites.indexOf(event);
+    if (index > -1) {
+      favorites.splice(index, 1);
+      localStorage.setItem("favorites", favorites);
+
+      let newArray = this.state.favorites.slice();
+      newArray.splice(index, 1);
+      this.setState({
+        favorites: newArray
+      });
+    }
   }
 
   render() {
@@ -74,7 +120,12 @@ class App extends Component {
           search={this.search}
           handleChange={this.updateQuery}
         />
-        <Functionalities feed={this.state.gifs} />
+        <Functionalities
+          feed={this.state.gifs}
+          feedAction={this.state.addFavorite}
+          favorites={this.state.favorites}
+          favoritesAction={this.state.removeFavorite}
+        />
       </section>
     );
   }
