@@ -39,14 +39,17 @@ class App extends Component {
       })
   }
 
-  loadFavorites = () => {
+  loadFavorites = () => { 
     if (typeof (Storage) !== "undefined") {
       let storageFavorites = localStorage.getItem("favorites");
-      if (storageFavorites != null) {
-        this.setState({
-          favorites: storageFavorites
-        });
-      }
+      if (storageFavorites === null || storageFavorites.length == 0)
+          return;
+
+      console.log("Favorites: " + storageFavorites);
+
+      this.setState({
+        favorites: storageFavorites
+      });
     } else {
       // Sorry! No Web Storage support..
     }
@@ -81,31 +84,26 @@ class App extends Component {
     });
   }
 
-  addFavorite = (event) => {
-    let favorites = localStorage.getItem("favorites");
-    favorites.push(event);
-    localStorage.setItem("favorites", favorites);
-
+  addFavorite = (event, gif) => {
     let newArray = this.state.favorites.slice();
-    newArray.push(event);
+    newArray.push(gif);
     this.setState({
       favorites: newArray
     });
+
+    localStorage.setItem("favorites", newArray);
   }
 
-  removeFavorite = (event) => {
-    let favorites = localStorage.getItem("favorites");
-
-    let index = favorites.indexOf(event);
+  removeFavorite = (event, gif) => {
+    let index = this.state.favorites.indexOf(gif);
     if (index > -1) {
-      favorites.splice(index, 1);
-      localStorage.setItem("favorites", favorites);
-
       let newArray = this.state.favorites.slice();
       newArray.splice(index, 1);
       this.setState({
         favorites: newArray
       });
+
+      localStorage.setItem("favorites", newArray);
     }
   }
 
@@ -122,9 +120,9 @@ class App extends Component {
         />
         <Functionalities
           feed={this.state.gifs}
-          feedAction={this.state.addFavorite}
+          feedAction={this.addFavorite}
           favorites={this.state.favorites}
-          favoritesAction={this.state.removeFavorite}
+          favoritesAction={this.removeFavorite}
         />
       </section>
     );
