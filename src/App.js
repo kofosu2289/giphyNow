@@ -14,29 +14,43 @@ class App extends Component {
       giphy: GphApiClient("8XADJBZWvzB75qIDyCpfWLbnE5otD7wG"),
       searchQuery: "",
       gifs: [],
+      searchgifs: [],
+      gifsOffset: [],
       favorites: [],
     };
   }
 
-  componentWillMount = () => {
-    this.loadFeed();
+  componentWillMount = async () => {
+    await this.loadFeed();
     this.loadFavorites();
   }
 
-  loadFeed = () => {
-    this.state.giphy.trending("gifs", {})
-      .then((response) => {
-        response.data.forEach((gif) => {
-          let newArray = this.state.gifs.slice();
-          newArray.push(gif.images.fixed_height_downsampled.gif_url);
+  componentDidMount = () => {
+    window.addEventListener('scroll', this.infiniteScroll);
+  }
 
-          this.setState({
-            gifs: newArray,
-          });
-        })
-      }).catch((err) => {
-        
-      })
+  componentWillUnmount = () => {
+    window.removeEventListener('scroll', this.infiniteScroll);
+  }
+
+  loadFeed = async () => {
+    const response = await this.state.giphy.trending("gifs", { "offset": this.state.gifsOffset });
+    response.data.forEach((gif) => {
+      this.setState(prevState => ({
+        gifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
+      }));
+    })
+
+  }
+
+  infiniteScroll = (event) => {
+    if ((window.innerHeight + window.scrollY) < document.body.offsetHeight && !this.state.isLoading)
+      return;
+    
+    this.setState({
+      gifsOffset: Number(this.state.gifsOffset) + 25
+    });
+    this.loadFeed();
   }
 
   loadFavorites = () => { 
@@ -53,27 +67,15 @@ class App extends Component {
     }
   }
 
-  search = (event) => {
+  search = async (event) => {
     event.preventDefault();
 
-    this.state.giphy.search('gifs', { "q": this.state.searchQuery })
-      .then((response) => {
-        this.setState({
-          gifs: [],
-        });
-
-        response.data.forEach((gif) => {
-          let newArray = this.state.gifs.slice();
-          newArray.push(gif.images.fixed_height_downsampled.gif_url);
-
-          this.setState({
-            gifs: newArray,
-          });
-        })
-      })
-      .catch((err) => {
-      
-      });
+    const response = await this.state.giphy.search('gifs', { "q": this.state.searchQuery })
+    response.data.forEach((gif) => {
+      this.setState(prevState => ({
+        searchGifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
+      }));
+    }) 
   }
 
   updateQuery = (event) => {

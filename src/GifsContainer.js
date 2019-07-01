@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Panel } from 'react-bootstrap';
 
 class GifsContainer extends Component {
   constructor(props) {
@@ -12,9 +13,9 @@ class GifsContainer extends Component {
   render() {
     const gifs = this.props.gifs.map((gif, i) =>
       <img
-        key={gif}
+        key={gif.id}
         onClick={((event) => this.props.action(event, gif))}
-        src={gif}
+        src={gif.url}
         alt={i}
       />
     );
@@ -23,6 +24,7 @@ class GifsContainer extends Component {
       <div>
         {gifs}
       </div>
+      
     );
   }
 }
