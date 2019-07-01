@@ -63,8 +63,11 @@ class App extends Component {
 
   loadFavorites = () => { 
     if (typeof (Storage) !== "undefined") {
+      
       let storageFavorites = localStorage.getItem("favorites");
-      if (storageFavorites === null )
+      console.log(`storageFavorites =  ${storageFavorites}`);
+      
+      if (storageFavorites === null || storageFavorites === '')
           return;
 
       this.setState({

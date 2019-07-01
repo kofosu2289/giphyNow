@@ -23,8 +23,8 @@ class Functionalities extends Component {
           </ul>
           <hr />
           <Switch>
-            <Route path='/Favorites' render={(props) => <GifsContainer {...props} gifs={this.props.favorites} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
-            <Route render={(props) => <GifsContainer {...props} gifs={this.props.feed}
+            <Route path='/Favorites' render={(props) => <GifsContainer {...props} gifs={this.props.favorites} hoverMsg={"Unfavorite"} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
+            <Route render={(props) => <GifsContainer {...props} gifs={this.props.feed} hoverMsg={"Favorite"}
               action={this.props.feedAction} scrollAction={this.props.scrollFeed} />} />
           </Switch>
         </div>
