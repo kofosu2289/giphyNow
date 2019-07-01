@@ -11,6 +11,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      isFeed: true,
       giphy: GphApiClient("8XADJBZWvzB75qIDyCpfWLbnE5otD7wG"),
       searchQuery: "",
       gifs: [],
@@ -33,6 +34,13 @@ class App extends Component {
     window.removeEventListener('scroll', this.infiniteScroll);
   }
 
+  test1 = () => {
+    console.log('A');
+  }
+
+  test2 = () => {
+    console.log('B');
+  }
   loadFeed = async () => {
     const response = await this.state.giphy.trending("gifs", { "offset": this.state.gifsOffset });
     response.data.forEach((gif) => {
@@ -69,7 +77,6 @@ class App extends Component {
 
   search = async (event) => {
     event.preventDefault();
-
     const response = await this.state.giphy.search('gifs', { "q": this.state.searchQuery })
     response.data.forEach((gif) => {
       this.setState(prevState => ({
@@ -127,6 +134,9 @@ class App extends Component {
           feedAction={this.addFavorite}
           favorites={this.state.favorites}
           favoritesAction={this.removeFavorite}
+          handleFeedClick={this.handleFeedClick}
+          scrollFeed={this.test1}
+          scrollFavorites={this.test2}
         />
       </section>
     );
