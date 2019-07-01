@@ -124,9 +124,6 @@ class App extends Component {
   render() {
     return (
       <section>
-        <PageHeader>
-          giphyNow
-        </PageHeader>
         <Search
           query={this.state.searchQuery}
           search={this.search}

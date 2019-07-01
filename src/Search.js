@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
 
+import './Search.css';
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -8,16 +10,16 @@ class Search extends Component {
 
   render() {
     return (
-      <Navbar>
+      <Navbar className="Navbar">
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#home">Discover: </a>
+            <a className="pageName">giphyNow </a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <form onSubmit={this.props.search}>
-            <Navbar.Form pullLeft>
+            <Navbar.Form pullRight>
               <FormGroup>
                 <FormControl
                   type="text"
@@ -26,7 +28,7 @@ class Search extends Component {
                   onChange={this.props.handleChange}
                 />
               </FormGroup>{' '}
-              <Button type="submit">Search</Button>
+              <button className='button search-btn' type="submit">Search</button>
             </Navbar.Form>
           </form>
         </Navbar.Collapse>

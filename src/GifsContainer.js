@@ -10,6 +10,14 @@ class GifsContainer extends Component {
     return this.props !== nextProps;
   }
 
+  componentDidMount = () => {
+    window.addEventListener('scroll', this.props.scrollAction);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('scroll', this.props.scrollAction);
+  }
+
   render() {
     const gifs = this.props.gifs.map((gif, i) =>
       <figure key={gif.id} className="effect-sarah">
