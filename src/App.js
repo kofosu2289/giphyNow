@@ -15,7 +15,7 @@ class App extends Component {
       giphy: GphApiClient("8XADJBZWvzB75qIDyCpfWLbnE5otD7wG"),
       searchQuery: "",
       gifs: [],
-      searchgifs: [],
+      searchGifs: [],
       gifsOffset: [],
       favorites: [],
     };
@@ -45,10 +45,17 @@ class App extends Component {
     const response = await this.state.giphy.trending("gifs", { "offset": this.state.gifsOffset });
     response.data.forEach((gif) => {
       this.setState(prevState => ({
-        gifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
+        gifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id, "title": gif.title }]
       }));
     })
 
+  }
+
+  handleClick = () => {
+    alert('click')
+    this.setState({
+      isFeed: true
+    })
   }
 
   infiniteScroll = (event) => {
@@ -59,6 +66,12 @@ class App extends Component {
       gifsOffset: Number(this.state.gifsOffset) + 25
     });
     this.loadFeed();
+  }
+
+  onSearchClick = () => {
+    this.setState({
+      isFeed: false
+    })
   }
 
   loadFavorites = () => { 
@@ -81,10 +94,16 @@ class App extends Component {
   search = async (event) => {
     event.preventDefault();
     const response = await this.state.giphy.search('gifs', { "q": this.state.searchQuery })
+    let newArray = [];
     response.data.forEach((gif) => {
-      this.setState(prevState => ({
-        searchGifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
-      }));
+      
+      newArray.push({"url": gif.images.fixed_height_downsampled.url, "id": gif.id })
+      // this.setState(prevState => ({
+      //   searchGifs: [...prevState.searchGifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
+      // }));
+      this.setState({
+        searchGifs: newArray
+      })
     }) 
   }
 
@@ -95,16 +114,18 @@ class App extends Component {
   }
 
   addFavorite = (event, gif) => {
+    console.log(gif)
     let index = this.state.favorites.indexOf(gif);
+    
     if (index === -1) {
       let newArray = this.state.favorites.slice();
       newArray.push(gif);
-    
+      console.log(newArray)
       this.setState({
         favorites: newArray
-      });
+      })
 
-      localStorage.setItem("favorites", newArray);
+      localStorage.setItem("favorites", this.state.favorites);
     }
   }
 
@@ -128,13 +149,16 @@ class App extends Component {
           query={this.state.searchQuery}
           search={this.search}
           handleChange={this.updateQuery}
+          onSearchClick={this.onSearchClick}
         />
         <Functionalities
           feed={this.state.gifs}
+          searchGifs={this.state.searchGifs}
+          isFeed={this.state.isFeed}
           feedAction={this.addFavorite}
           favorites={this.state.favorites}
           favoritesAction={this.removeFavorite}
-          handleFeedClick={this.handleFeedClick}
+          handleClick={this.handleClick}
           scrollFeed={this.test1}
           scrollFavorites={this.test2}
         />

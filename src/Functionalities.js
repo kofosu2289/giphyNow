@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
+import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 
 import './Functionalities.css';
 import GifsContainer from './GifsContainer';
@@ -10,13 +12,17 @@ class Functionalities extends Component {
     super(props);
   }
 
+  handleClick = () => {
+    this.props.handleClick();
+  }
+
   render() {
     return (
       <Router>
         <div>
          <div className='tabs'>
             <Link to='/'>
-              <button className='button'>Feed</button>
+              <button className='button'onClick={this.handleClick}>Feed</button>
             </Link>
 
             <Link to='/Favorites'>
@@ -24,9 +30,9 @@ class Functionalities extends Component {
            
           </div>
           <Switch>
-            <Route path='/Favorites' render={(props) => <GifsContainer {...props} gifs={this.props.favorites} hoverMsg={"Unfavorite"} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
-            <Route render={(props) => <GifsContainer {...props} gifs={this.props.feed} hoverMsg={"Favorite"}
-              action={this.props.feedAction} scrollAction={this.props.scrollFeed} />} />
+            <Route path='/Favorites' render={(props) => <GifsContainer {...props} icon={faTimes} gifs={this.props.favorites} hoverMsg={"Unfavorite"} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
+            <Route render={(props) => <GifsContainer {...props} icon={faHeart} gifs={this.props.feed} searchGifs={this.props.searchGifs} hoverMsg={"Favorite"}
+              action={this.props.feedAction} scrollAction={this.props.scrollFeed} isFeed={this.props.isFeed} />} />
         </Switch>
         
         </div>
