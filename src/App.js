@@ -42,13 +42,11 @@ class App extends Component {
   loadFavorites = () => { 
     if (typeof (Storage) !== "undefined") {
       let storageFavorites = localStorage.getItem("favorites");
-      if (storageFavorites === null || storageFavorites.length == 0)
+      if (storageFavorites === null )
           return;
 
-      console.log("Favorites: " + storageFavorites);
-
       this.setState({
-        favorites: storageFavorites
+        favorites: storageFavorites.split(","),
       });
     } else {
       // Sorry! No Web Storage support..
@@ -85,13 +83,17 @@ class App extends Component {
   }
 
   addFavorite = (event, gif) => {
-    let newArray = this.state.favorites.slice();
-    newArray.push(gif);
-    this.setState({
-      favorites: newArray
-    });
+    let index = this.state.favorites.indexOf(gif);
+    if (index === -1) {
+      let newArray = this.state.favorites.slice();
+      newArray.push(gif);
+    
+      this.setState({
+        favorites: newArray
+      });
 
-    localStorage.setItem("favorites", newArray);
+      localStorage.setItem("favorites", newArray);
+    }
   }
 
   removeFavorite = (event, gif) => {
