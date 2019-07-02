@@ -6,9 +6,6 @@ import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 import './Search.css';
 
 class Search extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleSearchClick = () => {
     this.props.onSearchClick();

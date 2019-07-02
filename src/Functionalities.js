@@ -7,10 +7,7 @@ import './Functionalities.css';
 import GifsContainer from './GifsContainer';
 
 class Functionalities extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   handleClick = () => {
     this.props.handleClick();
   }
@@ -32,13 +29,11 @@ class Functionalities extends Component {
             <Route path='/Favorites' render={(props) => <GifsContainer {...props} icon={faTimes} gifs={this.props.favorites} hoverMsg={"Unfavorite"} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
             <Route render={(props) => <GifsContainer {...props} icon={faHeart} gifs={this.props.feed} searchGifs={this.props.searchGifs} hoverMsg={"Favorite"}
               action={this.props.feedAction} scrollAction={this.props.scrollFeed} isFeed={this.props.isFeed} />} />
-        </Switch>
-        
+          </Switch>
         </div>
       </Router>
     );
   }
 }
      
-
 export default Functionalities;

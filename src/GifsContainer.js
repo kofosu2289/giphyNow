@@ -4,12 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import './GifsContainer.css';
 
 class GifsContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
-
+  
   shouldComponentUpdate(nextProps) {
     return this.props !== nextProps;
   }
@@ -52,7 +47,6 @@ class GifsContainer extends Component {
     } else {
       return (
         this.props.gifs.map((gif) =>
-          
           <figure key={gif.id} className="effect-sarah" onClick={((event) => this.props.action(event, gif))}>
             {console.log(gif)}
             <span>
@@ -65,20 +59,15 @@ class GifsContainer extends Component {
         )
       );
     }
-    
   }
 
   render() {
-    
     const gifs = this.decideDisplay();
     
-    
-
     return (
       <div className="grid">
         {gifs}
       </div>
-      
     );
   }
 }

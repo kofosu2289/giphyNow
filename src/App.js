@@ -40,7 +40,6 @@ class App extends Component {
         gifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id, "title": gif.title }]
       }));
     })
-
   }
 
   handleClick = () => {
@@ -67,18 +66,13 @@ class App extends Component {
 
   loadFavorites = () => { 
     if (typeof (Storage) !== "undefined") {
-      
       let storageFavorites = localStorage.getItem("favorites");
-      console.log(`storageFavorites =  ${storageFavorites}`);
-      
       if (storageFavorites === null || storageFavorites === '')
           return;
 
       this.setState({
         favorites: storageFavorites.split(","),
       });
-    } else {
-      // Sorry! No Web Storage support..
     }
   }
 
@@ -87,11 +81,7 @@ class App extends Component {
     const response = await this.state.giphy.search('gifs', { "q": this.state.searchQuery })
     let newArray = [];
     response.data.forEach((gif) => {
-      
       newArray.push({"url": gif.images.fixed_height_downsampled.url, "id": gif.id })
-      // this.setState(prevState => ({
-      //   searchGifs: [...prevState.searchGifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id }]
-      // }));
       this.setState({
         searchGifs: newArray
       })
@@ -105,9 +95,7 @@ class App extends Component {
   }
 
   addFavorite = (event, gif) => {
-    console.log(gif)
     let index = this.state.favorites.indexOf(gif);
-    
     if (index === -1) {
       let newArray = this.state.favorites.slice();
       newArray.push(gif);
@@ -115,7 +103,6 @@ class App extends Component {
       this.setState({
         favorites: newArray
       })
-
       localStorage.setItem("favorites", this.state.favorites);
     }
   }
@@ -128,7 +115,6 @@ class App extends Component {
       this.setState({
         favorites: newArray
       });
-
       localStorage.setItem("favorites", newArray);
     }
   }
