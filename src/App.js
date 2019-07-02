@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { PageHeader } from 'react-bootstrap';
-import './App.css';
 
+import './App.css';
 import Search from './Search';
 import Functionalities from './Functionalities';
 
@@ -34,13 +33,6 @@ class App extends Component {
     window.removeEventListener('scroll', this.infiniteScroll);
   }
 
-  test1 = () => {
-    console.log('A');
-  }
-
-  test2 = () => {
-    console.log('B');
-  }
   loadFeed = async () => {
     const response = await this.state.giphy.trending("gifs", { "offset": this.state.gifsOffset });
     response.data.forEach((gif) => {
@@ -52,7 +44,6 @@ class App extends Component {
   }
 
   handleClick = () => {
-    alert('click')
     this.setState({
       isFeed: true
     })
@@ -159,8 +150,6 @@ class App extends Component {
           favorites={this.state.favorites}
           favoritesAction={this.removeFavorite}
           handleClick={this.handleClick}
-          scrollFeed={this.test1}
-          scrollFavorites={this.test2}
         />
       </section>
     );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'

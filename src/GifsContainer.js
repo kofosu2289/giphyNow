@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Panel } from 'react-bootstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+
+import './GifsContainer.css';
 
 class GifsContainer extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class GifsContainer extends Component {
     if (this.props.isFeed === true) {
       return (
         this.props.gifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah">
+          <figure key={gif.id} className="effect-sarah"onClick={((event) =>  this.props.action(event, gif.url) )}>
             <span>
-              <img onClick={((event) =>  this.props.action(event, gif.url) )} src={gif.url} alt="A gif" />
+              <img  src={gif.url} alt="A gif" />
             </span>
             <figcaption>
               <h2><FontAwesomeIcon icon={this.props.icon} /></h2>
@@ -38,9 +39,9 @@ class GifsContainer extends Component {
     } else if(this.props.isFeed === false) {
       return (
         this.props.searchGifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah">
+          <figure key={gif.id} className="effect-sarah" onClick={((event) => this.props.action(event, gif.url))}>
             <span>
-              <img onClick={((event) => this.props.action(event, gif.url))} src={gif.url} alt="A gif" />
+              <img  src={gif.url} alt="A gif" />
             </span>
             <figcaption>
               <h2><FontAwesomeIcon icon={this.props.icon} /></h2>
@@ -52,10 +53,10 @@ class GifsContainer extends Component {
       return (
         this.props.gifs.map((gif) =>
           
-          <figure key={gif.id} className="effect-sarah">
+          <figure key={gif.id} className="effect-sarah" onClick={((event) => this.props.action(event, gif))}>
             {console.log(gif)}
             <span>
-              <img onClick={((event) => this.props.action(event, gif))} src={gif} alt="A gif" />
+              <img  src={gif} alt="A gif" />
             </span>
             <figcaption>
               <h2><FontAwesomeIcon icon={this.props.icon} /></h2>
