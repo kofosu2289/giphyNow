@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./css/App.css";
 import Search from "./components/Search.jsx";
 import Functionalities from "./components/Functionalities";
-import { searchGifs, feedGifs } from "./api";
+import { searchGifs, feedGifs } from "./services/api";
 
 class App extends Component {
   constructor() {
