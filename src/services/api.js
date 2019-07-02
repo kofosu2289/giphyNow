@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { KEY } from '../secret';
+
 
 const URL = `https://api.giphy.com/v1/gifs/`;
+const KEY = process.env.REACT_APP_API_KEY;
 
 export const feedGifs = async (offset) => {
   const response = await axios.get(`${URL}trending?api_key=${KEY}&offset=${offset}&`);
