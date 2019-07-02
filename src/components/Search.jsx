@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Navbar, FormGroup, FormControl } from 'react-bootstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 
+import SearchButton from './SearchButton';
 import '../css/Search.css';
 
-class Search extends Component {
+const Search = (props) => {
 
-  handleSearchClick = () => {
-    this.props.onSearchClick();
+  const handleSearchClick = () => {
+    props.onSearchClick();
   }
 
-  render() {
-    return (
-      <Navbar className="Navbar">
+  return (
+    <Navbar className="Navbar">
         <Navbar.Header>
           <Navbar.Brand>
             <a id="pageName">giphyNow&nbsp; <FontAwesomeIcon icon={faHeart} /></a>
@@ -21,23 +21,23 @@ class Search extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <form onSubmit={this.props.search}>
+          <form onSubmit={props.search}>
             <Navbar.Form pullRight>
               <FormGroup>
                 <FormControl
                   type="text"
                   placeholder="Search"
-                  value={this.props.query}
-                  onChange={this.props.handleChange}
+                  value={props.query}
+                  onChange={props.handleChange}
                 />
               </FormGroup>
-              <button className='button search-btn' type="submit" onClick={this.handleSearchClick}>Search</button>
+              <SearchButton handleSearchClick={handleSearchClick} name='Search' />
             </Navbar.Form>
           </form>
         </Navbar.Collapse>
       </Navbar>
-        );
-    }
+  );
 }
+
 
 export default Search;

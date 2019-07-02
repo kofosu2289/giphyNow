@@ -5,6 +5,8 @@ import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 
 import '../css/Functionalities.css';
 import GifsContainer from './GifsContainer';
+import FeedButton from './FeedButton';
+import FavoritesButton from './FavoritesButton';
 
 class Functionalities extends Component {
   
@@ -17,18 +19,42 @@ class Functionalities extends Component {
       <Router>
         <div>
          <div className='tabs'>
-            <Link to='/'>
-              <button className='button'onClick={this.handleClick}>Feed</button>
+            <Link to='/' className='tab'>
+              <FeedButton handleClick={this.handleClick} name='Feed' />
             </Link>
 
-            <Link to='/Favorites'>
-              <button className='button'>Favorites</button></Link>
-           
+            <Link to='/Favorites' className='tab'>
+              <FavoritesButton handleClick={this.handleClick} name='Favorites' />
+            </Link>
           </div>
           <Switch>
-            <Route path='/Favorites' render={(props) => <GifsContainer {...props} icon={faTimes} gifs={this.props.favorites} hoverMsg={"Unfavorite"} action={this.props.favoritesAction} scrollAction={this.props.scrollFavorites} />} />
-            <Route render={(props) => <GifsContainer {...props} icon={faHeart} gifs={this.props.feed} searchGifs={this.props.searchGifs} hoverMsg={"Favorite"}
-              action={this.props.feedAction} scrollAction={this.props.scrollFeed} isFeed={this.props.isFeed} />} />
+            <Route 
+              path='/Favorites' 
+              render={(props) => 
+                <GifsContainer 
+                  {...props} 
+                  icon={faTimes} 
+                  gifs={this.props.favorites} 
+                  hoverMsg={"Unfavorite"} 
+                  action={this.props.favoritesAction} 
+                  scrollAction={this.props.scrollFavorites}
+                />
+              } 
+            />
+            <Route 
+              render={(props) => 
+                <GifsContainer 
+                  {...props} 
+                  icon={faHeart} 
+                  gifs={this.props.feed} 
+                  searchGifs={this.props.searchGifs} 
+                  hoverMsg={"Favorite"}
+                  action={this.props.feedAction} 
+                  scrollAction={this.props.scrollFeed} 
+                  isFeed={this.props.isFeed} 
+                />
+              } 
+            />
           </Switch>
         </div>
       </Router>

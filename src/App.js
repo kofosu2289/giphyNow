@@ -1,111 +1,121 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './css/App.css';
-import Search from './components/Search';
-import Functionalities from './components/Functionalities';
-
-const GphApiClient = require('giphy-js-sdk-core')
+import "./css/App.css";
+import Search from "./components/Search.jsx";
+import Functionalities from "./components/Functionalities";
+import { searchGifs, feedGifs } from "./api";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       isFeed: true,
-      giphy: GphApiClient("8XADJBZWvzB75qIDyCpfWLbnE5otD7wG"),
       searchQuery: "",
       gifs: [],
       searchGifs: [],
       gifsOffset: [],
-      favorites: [],
+      favorites: []
     };
   }
 
   componentWillMount = async () => {
     await this.loadFeed();
     this.loadFavorites();
-  }
+  };
 
   componentDidMount = () => {
-    window.addEventListener('scroll', this.infiniteScroll);
-  }
+    window.addEventListener("scroll", this.infiniteScroll);
+  };
 
   componentWillUnmount = () => {
-    window.removeEventListener('scroll', this.infiniteScroll);
-  }
+    window.removeEventListener("scroll", this.infiniteScroll);
+  };
 
   loadFeed = async () => {
-    const response = await this.state.giphy.trending("gifs", { "offset": this.state.gifsOffset });
-    response.data.forEach((gif) => {
+    const response = await feedGifs(this.state.gifsOffset);
+    response.forEach(gif => {
       this.setState(prevState => ({
-        gifs: [...prevState.gifs, { "url": gif.images.fixed_height_downsampled.url, "id": gif.id, "title": gif.title }]
+        gifs: [
+          ...prevState.gifs,
+          {
+            url: gif.images.fixed_height_downsampled.url,
+            id: gif.id,
+            title: gif.title
+          }
+        ]
       }));
-    })
-  }
+    });
+  };
 
   handleClick = () => {
     this.setState({
       isFeed: true
-    })
-  }
+    });
+  };
 
-  infiniteScroll = (event) => {
-    if ((window.innerHeight + window.scrollY) < document.body.offsetHeight && !this.state.isLoading)
+  infiniteScroll = event => {
+    if (
+      window.innerHeight + window.scrollY < document.body.offsetHeight &&
+      !this.state.isLoading
+    )
       return;
-    
+
     this.setState({
       gifsOffset: Number(this.state.gifsOffset) + 25
     });
     this.loadFeed();
-  }
+  };
+
+  updateQuery = event => {
+    this.setState({
+      searchQuery: event.target.value
+    });
+  };
 
   onSearchClick = () => {
     this.setState({
       isFeed: false
-    })
-  }
+    });
+  };
 
-  loadFavorites = () => { 
-    if (typeof (Storage) !== "undefined") {
-      let storageFavorites = localStorage.getItem("favorites");
-      if (storageFavorites === null || storageFavorites === '')
-          return;
-
-      this.setState({
-        favorites: storageFavorites.split(","),
-      });
-    }
-  }
-
-  search = async (event) => {
+  search = async event => {
     event.preventDefault();
-    const response = await this.state.giphy.search('gifs', { "q": this.state.searchQuery })
+    const response = await searchGifs(this.state.searchQuery);
     let newArray = [];
-    response.data.forEach((gif) => {
-      newArray.push({"url": gif.images.fixed_height_downsampled.url, "id": gif.id })
+    response.forEach(gif => {
+      newArray.push({
+        url: gif.images.fixed_height_downsampled.url,
+        id: gif.id
+      });
       this.setState({
         searchGifs: newArray
-      })
-    }) 
-  }
-
-  updateQuery = (event) => {
-    this.setState({
-      searchQuery: event.target.value,
+      });
     });
-  }
+  };
+
+  loadFavorites = () => {
+    if (typeof Storage !== "undefined") {
+      let storageFavorites = localStorage.getItem("favorites");
+      if (storageFavorites === null || storageFavorites === "") return;
+
+      this.setState({
+        favorites: storageFavorites.split(",")
+      });
+    }
+  };
 
   addFavorite = (event, gif) => {
     let index = this.state.favorites.indexOf(gif);
     if (index === -1) {
       let newArray = this.state.favorites.slice();
       newArray.push(gif);
-      console.log(newArray)
+      console.log(newArray);
       this.setState({
         favorites: newArray
-      })
+      });
       localStorage.setItem("favorites", this.state.favorites);
     }
-  }
+  };
 
   removeFavorite = (event, gif) => {
     let index = this.state.favorites.indexOf(gif);
@@ -117,7 +127,7 @@ class App extends Component {
       });
       localStorage.setItem("favorites", newArray);
     }
-  }
+  };
 
   render() {
     return (
@@ -127,7 +137,7 @@ class App extends Component {
           search={this.search}
           handleChange={this.updateQuery}
           onSearchClick={this.onSearchClick}
-        />
+        />{" "}
         <Functionalities
           feed={this.state.gifs}
           searchGifs={this.state.searchGifs}

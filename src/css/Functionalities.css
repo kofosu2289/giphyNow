@@ -1,5 +1,12 @@
 .tabs {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  max-width: 1000px;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.tab {
+  flex-grow: 1;
+  text-align: center;
 }

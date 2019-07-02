@@ -5,23 +5,11 @@ import '../css/GifsContainer.css';
 
 class GifsContainer extends Component {
   
-  shouldComponentUpdate(nextProps) {
-    return this.props !== nextProps;
-  }
-
-  componentDidMount = () => {
-    window.addEventListener('scroll', this.props.scrollAction);
-  }
-
-  componentWillUnmount = () => {
-    window.removeEventListener('scroll', this.props.scrollAction);
-  }
-
   decideDisplay = () => {
     if (this.props.isFeed === true) {
       return (
         this.props.gifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah"onClick={((event) =>  this.props.action(event, gif.url) )}>
+          <figure key={gif.id} className="effect-sarah"onClick={(event) =>  this.props.action(event, gif.url)}>
             <span>
               <img  src={gif.url} alt="A gif" />
             </span>
@@ -34,7 +22,7 @@ class GifsContainer extends Component {
     } else if(this.props.isFeed === false) {
       return (
         this.props.searchGifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah" onClick={((event) => this.props.action(event, gif.url))}>
+          <figure key={gif.id} className="effect-sarah" onClick={(event) => this.props.action(event, gif.url)}>
             <span>
               <img  src={gif.url} alt="A gif" />
             </span>
@@ -47,7 +35,7 @@ class GifsContainer extends Component {
     } else {
       return (
         this.props.gifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah" onClick={((event) => this.props.action(event, gif))}>
+          <figure key={gif.id} className="effect-sarah" onClick={(event) => this.props.action(event, gif)}>
             {console.log(gif)}
             <span>
               <img  src={gif} alt="A gif" />
