@@ -3,7 +3,7 @@ import { Navbar, FormGroup, FormControl } from 'react-bootstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 
-import './Search.css';
+import '../css/Search.css';
 
 class Search extends Component {
 

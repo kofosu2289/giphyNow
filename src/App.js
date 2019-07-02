@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import './App.css';
-import Search from './Search';
-import Functionalities from './Functionalities';
+import './css/App.css';
+import Search from './components/Search';
+import Functionalities from './components/Functionalities';
 
 const GphApiClient = require('giphy-js-sdk-core')
 

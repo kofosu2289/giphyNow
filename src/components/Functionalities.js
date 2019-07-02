@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 import faHeart from '@fortawesome/fontawesome-free-solid/faHeart'
 
-import './Functionalities.css';
+import '../css/Functionalities.css';
 import GifsContainer from './GifsContainer';
 
 class Functionalities extends Component {

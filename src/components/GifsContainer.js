@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
-import './GifsContainer.css';
+import '../css/GifsContainer.css';
 
 class GifsContainer extends Component {
   
