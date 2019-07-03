@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+
 import "./css/App.css";
 import Search from "./components/Search.jsx";
 import Functionalities from "./components/Functionalities";
@@ -31,10 +32,55 @@ class App extends Component {
     window.removeEventListener("scroll", this.infiniteScroll);
   };
 
-  loadFeed = async () => {
-    const response = await feedGifs(this.state.gifsOffset);
+  
+  handleClick = () => {
+    this.setState({
+      isFeed: true
+    });
+  };
+  
+  infiniteScroll = event => {
+    if ((window.innerHeight + window.scrollY) < (document.body.offsetHeight - 50))
+    return;
+    
+    this.setState({
+      gifsOffset: Number(this.state.gifsOffset) + 25
+    });
+    this.loadFeed();
+  };
+  
+  updateQuery = event => {
+    this.setState({
+      searchQuery: event.target.value
+    });
+  };
+  
+  onSearchClick = () => {
+    this.setState({
+      isFeed: false
+    });
+  };
+  
+  search = async event => {
+    event.preventDefault();
+    const response = await searchGifs(this.state.searchQuery);
+    let newArray = [];
     response.forEach(gif => {
-      this.setState(prevState => ({
+      newArray.push({
+        url: gif.images.fixed_height_downsampled.url,
+        id: gif.id,
+        title: gif.title
+      });
+      this.setState({
+        searchGifs: newArray
+      });
+    });
+  };
+  
+  loadFeed = async () => {
+  const response = await feedGifs(this.state.gifsOffset);
+  response.forEach(gif => {
+    this.setState(prevState => ({
         gifs: [
           ...prevState.gifs,
           {
@@ -44,52 +90,6 @@ class App extends Component {
           }
         ]
       }));
-    });
-  };
-
-  handleClick = () => {
-    this.setState({
-      isFeed: true
-    });
-  };
-
-  infiniteScroll = event => {
-    if (
-      window.innerHeight + window.scrollY < document.body.offsetHeight &&
-      !this.state.isLoading
-    )
-      return;
-
-    this.setState({
-      gifsOffset: Number(this.state.gifsOffset) + 25
-    });
-    this.loadFeed();
-  };
-
-  updateQuery = event => {
-    this.setState({
-      searchQuery: event.target.value
-    });
-  };
-
-  onSearchClick = () => {
-    this.setState({
-      isFeed: false
-    });
-  };
-
-  search = async event => {
-    event.preventDefault();
-    const response = await searchGifs(this.state.searchQuery);
-    let newArray = [];
-    response.forEach(gif => {
-      newArray.push({
-        url: gif.images.fixed_height_downsampled.url,
-        id: gif.id
-      });
-      this.setState({
-        searchGifs: newArray
-      });
     });
   };
 
@@ -109,7 +109,6 @@ class App extends Component {
     if (index === -1) {
       let newArray = this.state.favorites.slice();
       newArray.push(gif);
-      console.log(newArray);
       this.setState({
         favorites: newArray
       });

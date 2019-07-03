@@ -9,9 +9,9 @@ class GifsContainer extends Component {
     if (this.props.isFeed === true) {
       return (
         this.props.gifs.map((gif) =>
-          <figure key={gif.id} className="effect-sarah"onClick={(event) =>  this.props.action(event, gif.url)}>
+          <figure key={gif.id} className="effect-sarah" onClick={(event) => this.props.action(event, gif.url)}>
             <span>
-              <img  src={gif.url} alt="A gif" />
+              <img src={gif.url} alt="A gif" />
             </span>
             <figcaption>
               <h2><FontAwesomeIcon icon={this.props.icon} /></h2>
@@ -36,12 +36,11 @@ class GifsContainer extends Component {
       return (
         this.props.gifs.map((gif) =>
           <figure key={gif.id} className="effect-sarah" onClick={(event) => this.props.action(event, gif)}>
-            {console.log(gif)}
             <span>
               <img  src={gif} alt="A gif" />
             </span>
             <figcaption>
-              <h2><FontAwesomeIcon icon={this.props.icon} /></h2>
+              <h2><FontAwesomeIcon  icon={this.props.icon} /><br /><a className='gif-title' href={gif.url}>{gif.title}</a></h2>
             </figcaption>
           </figure>
         )

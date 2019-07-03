@@ -29,7 +29,7 @@ class Functionalities extends Component {
           </div>
           <Switch>
             <Route 
-              path='/Favorites' 
+              exact path='/Favorites' 
               render={(props) => 
                 <GifsContainer 
                   {...props} 
@@ -41,7 +41,7 @@ class Functionalities extends Component {
                 />
               } 
             />
-            <Route 
+            <Route exact path = '/'
               render={(props) => 
                 <GifsContainer 
                   {...props} 

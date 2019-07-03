@@ -130,3 +130,11 @@ figure.effect-sarah:hover h2 {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+
+.gif-title {
+  font-size: 16px;
+}
+
+.gif-title:hover {
+  color: rgb(238, 9, 9);
+}
