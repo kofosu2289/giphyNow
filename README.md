@@ -1,10 +1,10 @@
 # GiphyNow
 
-##Demo
+## Demo
 
 See live demo [here](http://giphynow.surge.sh/)
 
-##Setup
+## Setup
 
 To run this project locally,
 - Click 'Clone or Download' and copy the link to this repository.
@@ -146,7 +146,7 @@ decideDisplay = () => {
     }
   }
   ```
-  
+
 ### Additional Libraries
 
 - [Axios](http://https://www.npmjs.com/package/axios), for making asychronous HTTP requests
