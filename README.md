@@ -2,7 +2,7 @@
 
 ## Demo
 
-See live demo [here](http://giphynow.surge.sh/)
+See live demo [here](http://giphynow.surge.sh/)!
 
 ## Setup
 
